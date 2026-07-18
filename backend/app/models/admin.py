@@ -7,8 +7,8 @@ class Role(Base):
     __tablename__ = "roles"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True, nullable=False)
-    description = Column(String, nullable=True)
+    name = Column(String(100), unique=True, index=True, nullable=False)
+    description = Column(String(500), nullable=True)
     is_system_role = Column(Boolean, default=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
@@ -16,9 +16,9 @@ class Permission(Base):
     __tablename__ = "permissions"
 
     id = Column(Integer, primary_key=True, index=True)
-    code = Column(String, unique=True, index=True, nullable=False) # e.g. view_dashboard, manage_users
-    name = Column(String, nullable=False)
-    category = Column(String, default="General") # Users, Projects, Suppliers, Prices, AI, Reports, System
+    code = Column(String(100), unique=True, index=True, nullable=False)
+    name = Column(String(255), nullable=False)
+    category = Column(String(100), default="General")
 
 class RolePermission(Base):
     __tablename__ = "role_permissions"
@@ -32,11 +32,11 @@ class AuditLog(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    user_email = Column(String, nullable=True)
-    action = Column(String, index=True, nullable=False) # Login, Logout, Project Created, Role Changed
-    category = Column(String, default="Security")
+    user_email = Column(String(255), nullable=True)
+    action = Column(String(255), index=True, nullable=False)
+    category = Column(String(100), default="Security")
     details = Column(Text, nullable=True)
-    ip_address = Column(String, nullable=True)
+    ip_address = Column(String(50), nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class Notification(Base):
@@ -44,22 +44,22 @@ class Notification(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     sender_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    target_role = Column(String, default="All")
-    subject = Column(String, nullable=False)
+    target_role = Column(String(100), default="All")
+    subject = Column(String(255), nullable=False)
     message = Column(Text, nullable=False)
-    channel = Column(String, default="In-App") # In-App, Email, Push
+    channel = Column(String(50), default="In-App")
     sent_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class SystemSettings(Base):
     __tablename__ = "system_settings"
 
     id = Column(Integer, primary_key=True, index=True)
-    app_name = Column(String, default="ConstructAI Enterprise")
-    company_logo = Column(String, nullable=True)
-    default_theme = Column(String, default="dark")
-    currency = Column(String, default="INR (₹)")
-    measurement_units = Column(String, default="Metric (m, sq m, cu m)")
-    timezone = Column(String, default="IST (Indian Standard Time)")
+    app_name = Column(String(255), default="ConstructAI Enterprise")
+    company_logo = Column(String(500), nullable=True)
+    default_theme = Column(String(50), default="dark")
+    currency = Column(String(50), default="INR (₹)")
+    measurement_units = Column(String(100), default="Metric (m, sq m, cu m)")
+    timezone = Column(String(100), default="IST (Indian Standard Time)")
     password_min_len = Column(Integer, default=8)
     session_timeout_mins = Column(Integer, default=60)
     rate_limit_per_min = Column(Integer, default=120)
@@ -70,9 +70,9 @@ class ApiKey(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    name = Column(String, nullable=False)
-    key_prefix = Column(String, nullable=False)
-    secret_hash = Column(String, nullable=False)
+    name = Column(String(255), nullable=False)
+    key_prefix = Column(String(50), nullable=False)
+    secret_hash = Column(String(255), nullable=False)
     is_active = Column(Boolean, default=True)
     rate_limit_per_min = Column(Integer, default=100)
     expires_at = Column(DateTime, nullable=True)
@@ -83,7 +83,7 @@ class ApiLog(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     api_key_id = Column(Integer, ForeignKey("api_keys.id"), nullable=True)
-    endpoint = Column(String, nullable=False)
+    endpoint = Column(String(500), nullable=False)
     status_code = Column(Integer, nullable=False)
     latency_ms = Column(Float, default=12.5)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
@@ -92,9 +92,9 @@ class BackupRecord(Base):
     __tablename__ = "backup_records"
 
     id = Column(Integer, primary_key=True, index=True)
-    filename = Column(String, nullable=False)
+    filename = Column(String(255), nullable=False)
     size_mb = Column(Float, default=24.5)
-    status = Column(String, default="Completed")
+    status = Column(String(50), default="Completed")
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class UserSearchHistory(Base):
@@ -102,9 +102,8 @@ class UserSearchHistory(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    user_email = Column(String, nullable=True)
-    search_type = Column(String, default="Marketplace Search") # AI Copilot Query, Marketplace Search, Project Input, Material Estimator
+    user_email = Column(String(255), nullable=True)
+    search_type = Column(String(100), default="Marketplace Search")
     query = Column(Text, nullable=False)
-    module = Column(String, default="General")
+    module = Column(String(100), default="General")
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-

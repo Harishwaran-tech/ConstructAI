@@ -7,28 +7,28 @@ class Project(Base):
     __tablename__ = "projects"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True, nullable=False)
+    title = Column(String(255), index=True, nullable=False)
     description = Column(Text, nullable=True)
-    client_name = Column(String, nullable=True)
-    owner_name = Column(String, nullable=True)
-    location = Column(String, nullable=True)
-    city = Column(String, nullable=True)
-    state = Column(String, nullable=True)
-    country = Column(String, nullable=True)
-    pincode = Column(String, nullable=True)
-    google_maps_url = Column(String, nullable=True)
-    
-    project_type = Column(String, default="Residential") # Residential, Commercial, Industrial, Apartment, Villa, Hospital, School, Bridge, Road, Warehouse
-    built_up_area = Column(Float, default=0.0) # in sq ft
-    total_budget = Column(Float, default=0.0) # in Currency (USD / INR / EUR)
-    currency = Column(String, default="INR")
-    measurement_units = Column(String, default="Metric / Sq.Ft")
-    status = Column(String, default="Planning") # Planning, In Progress, Completed, On Hold
+    client_name = Column(String(255), nullable=True)
+    owner_name = Column(String(255), nullable=True)
+    location = Column(String(500), nullable=True)
+    city = Column(String(100), nullable=True)
+    state = Column(String(100), nullable=True)
+    country = Column(String(100), nullable=True)
+    pincode = Column(String(20), nullable=True)
+    google_maps_url = Column(String(500), nullable=True)
+
+    project_type = Column(String(100), default="Residential")
+    built_up_area = Column(Float, default=0.0)
+    total_budget = Column(Float, default=0.0)
+    currency = Column(String(20), default="INR")
+    measurement_units = Column(String(50), default="Metric / Sq.Ft")
+    status = Column(String(50), default="Planning")
     completion_percentage = Column(Integer, default=0)
-    
-    start_date = Column(String, nullable=True)
-    end_date = Column(String, nullable=True)
-    
+
+    start_date = Column(String(50), nullable=True)
+    end_date = Column(String(50), nullable=True)
+
     # Detailed Specs JSON fields
     plot_details = Column(JSON, nullable=True)
     structural_details = Column(JSON, nullable=True)

@@ -9,8 +9,8 @@ class AIConversation(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     project_id = Column(Integer, ForeignKey("projects.id"), nullable=True)
-    title = Column(String, default="Construction Assistant Session")
-    messages = Column(JSON, nullable=False) # list of {role, content, timestamp}
+    title = Column(String(255), default="Construction Assistant Session")
+    messages = Column(JSON, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
@@ -19,11 +19,11 @@ class AIRecommendation(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     project_id = Column(Integer, ForeignKey("projects.id"), nullable=False)
-    category = Column(String, nullable=False) # Material, Budget, Labour, Timing, Risk
-    title = Column(String, nullable=False)
+    category = Column(String(100), nullable=False)
+    title = Column(String(255), nullable=False)
     description = Column(Text, nullable=False)
     estimated_savings = Column(Float, default=0.0)
-    impact = Column(String, default="High")
+    impact = Column(String(20), default="High")
     mitigation_step = Column(Text, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
@@ -32,7 +32,7 @@ class AIReport(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     project_id = Column(Integer, ForeignKey("projects.id"), nullable=False)
-    title = Column(String, nullable=False)
+    title = Column(String(255), nullable=False)
     executive_summary = Column(Text, nullable=False)
     budget_analysis = Column(JSON, nullable=True)
     material_analysis = Column(JSON, nullable=True)
@@ -46,6 +46,6 @@ class ChecklistHistory(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     project_id = Column(Integer, ForeignKey("projects.id"), nullable=False)
-    category = Column(String, nullable=False) # Pre-construction, Foundation, Structural, Electrical, Plumbing, Finishing, Safety
-    items = Column(JSON, nullable=False) # list of {id, title, status, mandatory}
+    category = Column(String(100), nullable=False)
+    items = Column(JSON, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
