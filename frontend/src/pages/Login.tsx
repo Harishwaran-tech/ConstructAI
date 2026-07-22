@@ -26,7 +26,15 @@ export const Login: React.FC = () => {
       login(data.access_token, data.user);
       navigate(from, { replace: true });
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Invalid email or password.');
+      if (err.response?.status === 401) {
+        setError(err.response?.data?.detail || 'Invalid email or password.');
+      } else if (err.response?.data?.detail) {
+        setError(err.response.data.detail);
+      } else if (!err.response || err.code === 'ERR_NETWORK') {
+        setError('Network Error: Unable to connect to the backend server. Please verify VITE_API_URL on Render.');
+      } else {
+        setError(`Server error (${err.response?.status || 'Unknown'}). Please check backend connection.`);
+      }
     } finally {
       setLoading(false);
     }
