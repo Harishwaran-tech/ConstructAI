@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { aiAPI } from '../../services/api';
-import { Sparkles, Send, Bot, User as UserIcon, HelpCircle, ArrowRight } from 'lucide-react';
+import { Sparkles, Send, Bot, User as UserIcon, HelpCircle, ArrowRight, Lightbulb } from 'lucide-react';
 
 interface Props {
   projectId?: number;
@@ -101,8 +101,9 @@ export const AIChatInterface: React.FC<Props> = ({ projectId }) => {
               </div>
 
               {msg.explanation && (
-                <div className="text-[10px] text-slate-400 font-mono italic px-1">
-                  💡 Explanation: {msg.explanation}
+                <div className="text-[10px] text-slate-400 font-mono italic px-2 py-1 rounded-lg bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/10 dark:border-amber-500/20 flex items-center gap-1.5 mt-1.5 w-fit">
+                  <Lightbulb className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                  <span>Explanation: {msg.explanation}</span>
                 </div>
               )}
             </div>

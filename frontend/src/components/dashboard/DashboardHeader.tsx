@@ -29,8 +29,34 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onOpenNewProje
             <Sparkles className="w-4 h-4 text-blue-300 animate-pulse" /> ConstructAI Enterprise Command Center
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            Welcome back, {user?.full_name?.split(' ')[0] || 'User'}! 👋
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight flex items-center gap-1.5 flex-wrap">
+            Welcome back, {user?.full_name?.split(' ')[0] || 'User'}!
+            <span className="inline-block align-middle waving-hand-container">
+              <style>{`
+                @keyframes wave-animation {
+                  0% { transform: rotate( 0.0deg) }
+                  10% { transform: rotate(14.0deg) }
+                  20% { transform: rotate(-8.0deg) }
+                  30% { transform: rotate(14.0deg) }
+                  40% { transform: rotate(-4.0deg) }
+                  50% { transform: rotate(10.0deg) }
+                  60% { transform: rotate( 0.0deg) }
+                  100% { transform: rotate( 0.0deg) }
+                }
+                .waving-hand-container {
+                  animation: wave-animation 2.5s infinite;
+                  transform-origin: 70% 70%;
+                }
+              `}</style>
+              <svg
+                className="w-8 h-8 text-amber-300 drop-shadow-md"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M21.8,11.5c-0.4-0.4-1-0.4-1.4,0l-1.3,1.3c0-0.1,0-0.2,0-0.3v-8c0-0.8-0.7-1.5-1.5-1.5s-1.5,0.7-1.5,1.5v5h-1v-9c0-0.8-0.7-1.5-1.5-1.5S12,1.2,12,2v8h-1V1c0-0.8-0.7-1.5-1.5-1.5S8,0.2,8,1v9H7V3.5C7,2.7,6.3,2,5.5,2S4,2.7,4,3.5v10c0,4.7,3.8,8.5,8.5,8.5h3.3c3.5,0,6.5-2.7,6.8-6.2l0.2-2.9C22.8,12.5,22.4,11.9,21.8,11.5z" />
+              </svg>
+            </span>
           </h1>
 
           <p className="text-xs sm:text-sm text-blue-100/90 max-w-2xl leading-relaxed">
